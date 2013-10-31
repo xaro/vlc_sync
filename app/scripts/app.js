@@ -1,10 +1,6 @@
 'use strict';
 
-angular.module('vlcSyncApp', [
-  'ngCookies',
-  'ngResource',
-  'ngSanitize'
-])
+angular.module('vlcSyncApp', [])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
