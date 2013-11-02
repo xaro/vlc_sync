@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('vlcSyncApp')
-  .controller('MainCtrl', ($scope, $http, $timeout) ->
-    $scope.channel = new DataChannel('VLC')
+  .controller('MainCtrl', ($scope, $http, $timeout, $routeParams) ->
+    $scope.channel = new DataChannel($routeParams.roomId)
     $scope.connected = false
 
     $scope.channel.onopen = (userid) ->
