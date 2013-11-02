@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('vlcSyncApp', [])
-  .config(function ($routeProvider) {
+  .config(function($routeProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
@@ -10,4 +10,7 @@ angular.module('vlcSyncApp', [])
       .otherwise({
         redirectTo: '/'
       });
-  });
+  })
+  .config(['$httpProvider', function($httpProvider) {
+    delete $httpProvider.defaults.headers.common["X-Requested-With"]
+  }]);

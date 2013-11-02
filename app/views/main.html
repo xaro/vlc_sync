@@ -1,9 +1,19 @@
 <div class="hero-unit">
-  <h1>'Allo, 'Allo!</h1>
-  <p>You now have</p>
-  <ul>
-      <li ng-repeat="thing in awesomeThings">{{thing}}</li>
-  </ul>
-  <p>installed.</p>
-  <h3>Enjoy coding! - Yeoman</h3>
+  <div class="timer">
+    {{vlcInstance.timer}}
+  </div>
+  <div class="player-controls">
+    <button class="play" ng-hide="vlcInstance.playing" ng-click="play()"> 
+      <i class="fa fa-play"></i>
+    </button>
+    <button class="pause" ng-show="vlcInstance.playing" ng-click="pause()">
+      <i class="fa fa-pause"></i>
+    </button>
+    <button class="stop" ng-click="stop()">
+      <i class="fa fa-stop"></i>
+    </button>
+  </div>
+  
+  <p>Connection: {{connected}}</p>
+  <input type="text" ng-model="port" placeholder="Enter the port of VLC" />
 </div>
