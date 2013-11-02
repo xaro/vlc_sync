@@ -1,6 +1,6 @@
 <div class="hero-unit">
   <div class="timer">
-    {{vlcInstance.timer}}
+    {{vlcInstance.timer | secToMins}}
   </div>
   <div class="player-controls">
     <button class="play" ng-hide="vlcInstance.playing" ng-click="play()"> 
@@ -9,11 +9,8 @@
     <button class="pause" ng-show="vlcInstance.playing" ng-click="pause()">
       <i class="fa fa-pause"></i>
     </button>
-    <button class="stop" ng-click="stop()">
-      <i class="fa fa-stop"></i>
-    </button>
   </div>
-  
+
   <p>Connection: {{connected}}</p>
   <input type="text" ng-model="port" placeholder="Enter the port of VLC" />
 </div>

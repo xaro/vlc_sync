@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('vlcSyncApp', [])
+angular.module('vlcSyncApp', ["timeFilters"])
   .config(function($routeProvider) {
     $routeProvider
       .when('/', {

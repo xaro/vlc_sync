@@ -23,6 +23,7 @@ angular.module('vlcSyncApp')
     $scope.port = 8080
     $scope.vlcInstance =
       playing: false
+      timer: 0
 
     $scope.play = () ->
       $.getJSON "http://127.0.0.1:9393/status/#{$scope.port}/pl_pause", (data) ->
@@ -43,7 +44,7 @@ angular.module('vlcSyncApp')
       else
         $scope.vlcInstance.playing = false
 
-      $scope.$apply()
+      $scope.vlcInstance.timer = data.time
 
     do serverPolling = () ->
       $http({method: 'GET', url: "http://127.0.0.1:9393/status/#{$scope.port}"})
