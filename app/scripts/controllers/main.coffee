@@ -44,6 +44,7 @@ angular.module('vlcSyncApp')
       else
         $scope.vlcInstance.playing = false
 
+      $scope.vlcInstance.title = data.information.category.meta.filename
       $scope.vlcInstance.timer = data.time
 
     do serverPolling = () ->
