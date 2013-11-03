@@ -2,7 +2,7 @@
   <div class="users">
     <h2>What the users are playing</h2>
     <ul>
-      <li><strong>You:</strong> {{localUser.vlcInstance.title}} []</li>
+      <li><strong>You:</strong> {{localUser.vlcInstance.title}}</li>
       <li ng-repeat="(id, user) in remoteUsers">{{user.name}}: {{user.vlcInstance.title}}</li>
     </ul>
   </div>

@@ -45,6 +45,9 @@ angular.module('vlcSyncApp')
           $.getJSON "http://127.0.0.1:#{$scope.serverPort}/status/#{$scope.port}/pl_pause", (data) ->
             $scope.localUser.vlcInstance.playing = false
             $scope.processing = false
+        else if message.action == "jump"
+          $.getJSON "http://127.0.0.1:#{$scope.serverPort}/status/#{$scope.port}/seek&val=#{message.user.vlcInstance.timer}", (data) ->            
+            $scope.processing = false
         else
             $scope.processing = false
 
@@ -95,7 +98,11 @@ angular.module('vlcSyncApp')
       else if $scope.localUser.vlcInstance.title != data.information.category.meta.filename
         $scope.localUser.vlcInstance.title = data.information.category.meta.filename
         syncNeeded = true
-      
+
+      if Math.abs(data.time - $scope.localUser.vlcInstance.timer) > 3
+        syncNeeded = true
+        action = "jump"
+
       $scope.localUser.vlcInstance.timer = data.time
 
       if syncNeeded && !$scope.processing && $scope.connected
