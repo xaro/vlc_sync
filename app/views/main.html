@@ -1,17 +1,27 @@
 <div class="hero-unit">
-  <span>{{vlcInstance.title}}</span>
+  <div class="users">
+    <h2>What the users are playing</h2>
+    <ul>
+      <li><strong>You:</strong> {{localUser.vlcInstance.title}} []</li>
+      <li ng-repeat="(id, user) in remoteUsers">{{user.name}}: {{user.vlcInstance.title}}</li>
+    </ul>
+  </div>
   <div class="timer">
-    {{vlcInstance.timer | secToMins}}
+    {{localUser.vlcInstance.timer | secToMins}}
   </div>
   <div class="player-controls">
-    <button class="play" ng-hide="vlcInstance.playing" ng-click="play()"> 
+    <button class="play" ng-hide="localUser.vlcInstance.playing" ng-click="play()"> 
       <i class="fa fa-play"></i>
     </button>
-    <button class="pause" ng-show="vlcInstance.playing" ng-click="pause()">
+    <button class="pause" ng-show="localUser.vlcInstance.playing" ng-click="pause()">
       <i class="fa fa-pause"></i>
     </button>
   </div>
 
   <p>Connection: {{connected}}</p>
+  <input type="text" ng-model="serverPort" placeholder="Enter the port of Server" />
   <input type="text" ng-model="port" placeholder="Enter the port of VLC" />
+  <button class="start-sync" ng-hide="startSync" ng-click="startSync()">
+    Start Sync
+  </button>
 </div>
