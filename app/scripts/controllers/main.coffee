@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 angular.module('vlcSyncApp')
   .controller 'MainCtrl', ($scope, $http, $timeout, $routeParams) ->
@@ -36,17 +36,17 @@ angular.module('vlcSyncApp')
           name: message.user.name
           id: userid
           vlcInstance: message.user.vlcInstance
-        
+
         if message.action == "play" && !$scope.localUser.vlcInstance.playing
-          $.getJSON "http://127.0.0.1:#{$scope.serverPort}/status/#{$scope.port}/pl_pause", (data) ->
+          $.getJSON apiUrl("pl_pause"), (data) ->
             $scope.localUser.vlcInstance.playing = true
             $scope.processing = false
         else if message.action == "pause" && $scope.localUser.vlcInstance.playing
-          $.getJSON "http://127.0.0.1:#{$scope.serverPort}/status/#{$scope.port}/pl_pause", (data) ->
+          $.getJSON apiUrl("pl_pause"), (data) ->
             $scope.localUser.vlcInstance.playing = false
             $scope.processing = false
         else if message.action == "jump"
-          $.getJSON "http://127.0.0.1:#{$scope.serverPort}/status/#{$scope.port}/seek&val=#{message.user.vlcInstance.timer}", (data) ->            
+          $.getJSON apiUrl("seek", "val=#{message.user.vlcInstance.timer}"), (data) ->
             $scope.processing = false
         else
             $scope.processing = false
@@ -60,7 +60,7 @@ angular.module('vlcSyncApp')
     $scope.play = () ->
       $scope.processing = true
       $scope.localUser.vlcInstance.playing = true
-      $.getJSON "http://127.0.0.1:#{$scope.serverPort}/status/#{$scope.port}/pl_pause", (data) ->
+      $.getJSON apiUrl("pl_pause"), (data) ->
         $scope.updateVlcInstace data
         $scope.channel.send
           type: "playback"
@@ -71,7 +71,7 @@ angular.module('vlcSyncApp')
     $scope.pause = () ->
       $scope.processing = true
       $scope.localUser.vlcInstance.playing = false
-      $.getJSON "http://127.0.0.1:#{$scope.serverPort}/status/#{$scope.port}/pl_pause", (data) ->
+      $.getJSON apiUrl("pl_pause"), (data) ->
         $scope.updateVlcInstace data
         $scope.channel.send
           type: "playback"
@@ -90,7 +90,7 @@ angular.module('vlcSyncApp')
         $scope.localUser.vlcInstance.playing = false
         syncNeeded = true
         action = "pause"
-      
+
       if data.state == "stopped" && $scope.localUser.vlcInstance.title != "Not playing"
         $scope.localUser.vlcInstance.title = "Not playing"
         syncNeeded = true
@@ -113,8 +113,11 @@ angular.module('vlcSyncApp')
 
     $scope.startSync = () ->
       do serverPolling = () ->
-        $http({method: 'GET', url: "http://127.0.0.1:#{$scope.serverPort}/status/#{$scope.port}"})
+        $http({method: 'GET', url: apiUrl("")})
           .success (data, status, headers, config) ->
             $scope.updateVlcInstace data
             $timeout serverPolling, 1000
           #TODO: Handle errors
+
+    apiUrl = (command, query="") ->
+      "http://127.0.0.1:#{$scope.serverPort}/status?vlcPort=#{$scope.port}&command=#{command}&#{query}"

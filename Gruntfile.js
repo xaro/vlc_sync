@@ -1,12 +1,6 @@
 // Generated on 2013-10-31 using generator-angular 0.5.1
 'use strict';
 
-// # Globbing
-// for performance reasons we're only matching one level down:
-// 'test/spec/{,*/}*.js'
-// use this if you want to recursively match all subfolders:
-// 'test/spec/**/*.js'
-
 module.exports = function (grunt) {
   require('load-grunt-tasks')(grunt);
   require('time-grunt')(grunt);
@@ -21,10 +15,6 @@ module.exports = function (grunt) {
       coffee: {
         files: ['<%= yeoman.app %>/scripts/{,*/}*.coffee'],
         tasks: ['coffee:dist']
-      },
-      coffeeTest: {
-        files: ['test/spec/{,*/}*.coffee'],
-        tasks: ['coffee:test']
       },
       compass: {
         files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
@@ -73,16 +63,6 @@ module.exports = function (grunt) {
           ]
         }
       },
-      test: {
-        options: {
-          port: 9001,
-          base: [
-            '.tmp',
-            'test',
-            '<%= yeoman.app %>'
-          ]
-        }
-      },
       dist: {
         options: {
           base: '<%= yeoman.dist %>'
@@ -122,15 +102,6 @@ module.exports = function (grunt) {
           cwd: '<%= yeoman.app %>/scripts',
           src: '{,*/}*.coffee',
           dest: '.tmp/scripts',
-          ext: '.js'
-        }]
-      },
-      test: {
-        files: [{
-          expand: true,
-          cwd: 'test/spec',
-          src: '{,*/}*.coffee',
-          dest: '.tmp/spec',
           ext: '.js'
         }]
       }
@@ -277,11 +248,6 @@ module.exports = function (grunt) {
         'compass:server',
         'copy:styles'
       ],
-      test: [
-        'coffee',
-        'compass',
-        'copy:styles'
-      ],
       dist: [
         'coffee',
         'compass:dist',
@@ -290,12 +256,6 @@ module.exports = function (grunt) {
         'svgmin',
         'htmlmin'
       ]
-    },
-    karma: {
-      unit: {
-        configFile: 'karma.conf.js',
-        singleRun: true
-      }
     },
     cdnify: {
       dist: {
@@ -337,14 +297,6 @@ module.exports = function (grunt) {
     ]);
   });
 
-  grunt.registerTask('test', [
-    'clean:server',
-    'concurrent:test',
-    'autoprefixer',
-    'connect:test',
-    'karma'
-  ]);
-
   grunt.registerTask('build', [
     'clean:dist',
     'useminPrepare',
@@ -362,7 +314,6 @@ module.exports = function (grunt) {
 
   grunt.registerTask('default', [
     'jshint',
-    'test',
     'build'
   ]);
 };
